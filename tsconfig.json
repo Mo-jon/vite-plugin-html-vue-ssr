@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "target": "ES2022",
+        "module": "ESNext",
+        "moduleResolution": "Bundler", // 👈 关键！替代 'node' 或 'nodenext'
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "strict": true,
+        "skipLibCheck": true, // 跳过 .d.ts 检查，避免第三方类型报错
+        "declaration": false, // tsup 负责生成 d.ts，这里可关
+        "outDir": "./dist",
+        "rootDir": "./src"
+    },
+    "include": [
+        "src"
+    ]
+}

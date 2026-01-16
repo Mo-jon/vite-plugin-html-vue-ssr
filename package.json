@@ -1,0 +1,42 @@
+{
+  "name": "vite-plugin-html-vue-ssr",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist/index.cjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "scripts": {
+    "build": "tsup src/index.ts --dts --format esm,cjs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vite",
+    "plugin",
+    "vite-plugin"
+  ],
+  "author": "mojon",
+  "license": "ISC",
+  "description": "vite插件，处理vue ssr渲染",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "vite": "^5.4.21",
+    "vue": "^3.5.26"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "prettier": "^3.8.0",
+    "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
+    "vue": "*"
+  }
+}
