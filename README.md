@@ -222,6 +222,66 @@ export default defineConfig({
 })
 ```
 
+### 多页面应用配置
+
+对于多页面应用，可以为每个页面创建独立的 HTML 文件，并在 Vite 配置中指定入口：
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import { htmlVueSsr, htmlVueSsrPrettier } from 'vite-plugin-html-vue-ssr'
+
+export default defineConfig({
+  plugins: [
+    htmlVueSsr({
+      // 所有页面共享的属性
+      appName: 'My Multi-Page App'
+    }),
+    htmlVueSsrPrettier({ tabWidth: 2 })
+  ],
+  build: {
+    rollupOptions: {
+      input: {
+        home: './index.html',
+        about: './about.html',
+        contact: './contact.html'
+      }
+    }
+  }
+})
+```
+
+```html
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{appName}} - Home</title>
+  </head>
+  <body>
+    <h1>Welcome to {{appName}}</h1>
+    <p>This is the home page</p>
+  </body>
+</html>
+```
+
+```html
+<!-- about.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{appName}} - About</title>
+  </head>
+  <body>
+    <h1>About {{appName}}</h1>
+    <p>This is the about page</p>
+  </body>
+</html>
+```
 
 ## 常见问题
 
