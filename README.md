@@ -58,12 +58,12 @@ import {
   htmlVueSsrCopy,
 } from "vite-plugin-html-vue-ssr";
 
-export default {
+export default defineConfig({
   plugins: [
     htmlVueSsr({
       title: "index",
       // 可选的 Vue 组件属性
-      components：{},
+      components: {},
     }),
     htmlVueSsrPrettier({
       // Prettier 配置选项
@@ -189,6 +189,82 @@ export default {
 2. **Node.js 版本**：需要 Node.js 18.0.0 或更高版本
 3. **构建输出**：插件会在构建时执行目录复制操作，请确保目标目录有正确的写入权限
 4. **性能考虑**：HTML 格式化可能会增加构建时间，特别是对于大型项目
+5. **模板语法**：在 HTML 文件中可以使用 Vue 的模板语法，如 `{{ title }}`
+6. **组件注册**：如果需要在 HTML 模板中使用 Vue 组件，需要先在 `components` 属性中注册
+
+## 使用场景
+
+### 静态站点生成
+
+结合 Vite 的静态站点生成功能，使用该插件可以轻松创建基于 Vue 的静态网站：
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import { htmlVueSsr, htmlVueSsrPrettier } from 'vite-plugin-html-vue-ssr'
+
+export default defineConfig({
+  plugins: [
+    htmlVueSsr({
+      title: 'My Static Site',
+      description: 'A beautiful static site built with Vue and Vite'
+    }),
+    htmlVueSsrPrettier()
+  ],
+  build: {
+    rollupOptions: {
+      input: {
+        home: './index.html',
+        about: './about.html'
+      }
+    }
+  }
+})
+```
+
+
+## 常见问题
+
+### Q: 插件如何处理动态路由？
+A: 该插件主要用于处理静态 HTML 页面的 SSR 渲染，对于动态路由，建议结合 Vue Router 和 Nuxt.js 等框架使用。
+
+### Q: 如何在 HTML 模板中使用 Vue 组件？
+A: 首先需要在 `htmlVueSsr` 插件的配置中注册组件，然后在 HTML 模板中使用：
+
+```javascript
+// vite.config.js
+import { defineConfig } from 'vite'
+import { htmlVueSsr } from 'vite-plugin-html-vue-ssr'
+import MyComponent from './components/MyComponent.vue'
+
+export default defineConfig({
+  plugins: [
+    htmlVueSsr({
+      components: {
+        MyComponent
+      }
+    })
+  ]
+})
+```
+
+```html
+<!-- index.html -->
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My App</title>
+  </head>
+  <body>
+    <my-component></my-component>
+  </body>
+</html>
+```
+
+### Q: 插件与其他 HTML 处理插件冲突怎么办？
+A: 建议将该插件放在其他 HTML 处理插件之前，以确保正确处理 Vue SSR 渲染。
 
 ## 开发
 
